@@ -420,7 +420,7 @@ def enviar_mensajes_whatsapp(texto, numero):
         
         agregar_mensajes_log(json.dumps(numero))
         
-        #agregar_mensajes_log(json.dumps(response.read().decode()))
+        agregar_mensajes_log(json.dumps(response.read().decode()))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
