@@ -123,14 +123,14 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 #https://bot-grupo-mascleaning.onrender.com/static/video-home.mp4
-    if "hola" or "saludo" or "tarde" or "tardes" in texto:
+    if "hola" in texto:
         data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
             "type": "video",
             "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-home.mp4",
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4",
                 "caption": " Hola, Bienvenido a Mas Cleaning."
             }
         }
