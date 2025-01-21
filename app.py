@@ -31,6 +31,11 @@ def index():
     registros_ordenados = ordenar_fecha_hora(registros)
     return render_template('index.html', registros=registros_ordenados)
 
+@app.route('/video')
+def video_home():
+    #Endpoint para obtener video
+    return render_template('video.html')
+
 mensajes_log = []
 
 #Funcion para agregar mensajes y guardar en la base de datos
