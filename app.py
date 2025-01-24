@@ -77,6 +77,7 @@ def extrae_numero(numFrom):
 def recibir_mensajes(req):
     try:
         req = request.get_json()
+        agregar_mensajes_log(json.dumps(re))
         entry = req['entry'][0]
         changes = entry['changes'][0]
         value = changes['value']
@@ -105,7 +106,15 @@ def recibir_mensajes(req):
                         numero = extrae_numero(numero)
 
                         enviar_mensajes_whatsapp(texto, numero)
+                if tipo == 'button':
+                    tipo_boton = messages["button"]["payload"]
 
+                    if tipo_boton == "PAYLOAD":
+                        texto = messages["button"]["text"]
+                        numero = messages['from']
+                        numero = extrae_numero(numero)
+
+                        enviar_mensajes_whatsapp(texto, numero)
                 
                 if 'text' in messages:
                     texto = messages['text']['body']
@@ -122,7 +131,7 @@ def recibir_mensajes(req):
 
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
-#https://bot-grupo-mascleaning.onrender.com/static/video-home.mp4
+
     if "hola" in texto:
         data={
             "messaging_product": "whatsapp",
@@ -428,13 +437,24 @@ def enviar_mensajes_whatsapp(texto, numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "PAYLOAD"
+                                "payload": "clkshare"
                             }
                         ]
                     }
                 ]
             }
         }
+    elif "clkshare" in texto:
+        data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "document",
+            "document": {
+                    "link": "https://www.turnerlibros.com/wp-content/uploads/2021/02/ejemplo.pdf",
+                    "caption": "Te comparto la informacion de los productos"
+                }
+            }
     else:
         data={
             "messaging_product": "whatsapp",
