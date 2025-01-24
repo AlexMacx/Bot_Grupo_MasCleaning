@@ -411,7 +411,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                         "parameters": [
                             {
                                 "type": "video",
-                                "image": {
+                                "video": {
                                     "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
                                 }
                             }
