@@ -77,7 +77,7 @@ def extrae_numero(numFrom):
 def recibir_mensajes(req):
     try:
         req = request.get_json()
-        agregar_mensajes_log(json.dumps(re))
+        agregar_mensajes_log(json.dumps(req))
         entry = req['entry'][0]
         changes = entry['changes'][0]
         value = changes['value']
