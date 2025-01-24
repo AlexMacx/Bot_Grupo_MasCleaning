@@ -401,7 +401,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             "to": numero,
             "type": "template",
             "template": {
-                "name": "template-uno",
+                "name": "bienvenida_mc",
                 "languaje": {
                     "code": "es_MX"
                 },
@@ -410,19 +410,25 @@ def enviar_mensajes_whatsapp(texto, numero):
                         "type": "header",
                         "parameters": [
                             {
-                                "type": "image",
+                                "type": "video",
                                 "image": {
-                                    "link": "https://static.wikia.nocookie.net/doblaje/images/b/be/SquidwardTentacles.png/revision/latest?cb=20220925230450&path-prefix=es"
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
                                 }
                             }
                         ]
                     },
                     {
                         "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
                         "parameters": [
                             {
-                                "type": "text",
-                                "text": "Mas Cleaning."
+                                "type": "payload",
+                                "payload": "PAYLOAD"
                             }
                         ]
                     }
@@ -459,8 +465,8 @@ def enviar_mensajes_whatsapp(texto, numero):
         response = connection.getresponse()
         
         agregar_mensajes_log(json.dumps(numero))
-        agregar_mensajes_log(json.dumps(response.read()))
-        #agregar_mensajes_log(json.dumps(response.read().decode()))
+        
+        agregar_mensajes_log(json.dumps(response.read().decode()))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
