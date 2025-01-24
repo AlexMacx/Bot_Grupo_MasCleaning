@@ -394,6 +394,41 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Compartenos tu dirreción para agendar entrega"
             }
         }
+    elif "media" in texto:
+        data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "template-uno",
+                "languaje": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://static.wikia.nocookie.net/doblaje/images/b/be/SquidwardTentacles.png/revision/latest?cb=20220925230450&path-prefix=es"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": [
+                            {
+                                "type": "text",
+                                "text": "Mas Cleaning."
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
     else:
         data={
             "messaging_product": "whatsapp",
@@ -424,8 +459,8 @@ def enviar_mensajes_whatsapp(texto, numero):
         response = connection.getresponse()
         
         agregar_mensajes_log(json.dumps(numero))
-        
-        agregar_mensajes_log(json.dumps(response.read().decode()))
+        agregar_mensajes_log(json.dumps(response.read()))
+        #agregar_mensajes_log(json.dumps(response.read().decode()))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
