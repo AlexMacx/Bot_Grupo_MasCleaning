@@ -402,7 +402,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             "type": "template",
             "template": {
                 "name": "bienvenida_mc",
-                "languaje": {
+                "language": {
                     "code": "es_MX"
                 },
                 "components": [
