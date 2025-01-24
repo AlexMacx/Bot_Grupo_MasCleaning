@@ -133,6 +133,8 @@ def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
     if "hola" in texto:
+        data=data_inicial(numero) 
+    elif "otro" in texto:
         data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -403,8 +405,48 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Compartenos tu dirreción para agendar entrega"
             }
         }
-    elif "media" in texto:
+
+    elif "clkshare" in texto:
         data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "document",
+            "document": {
+                    "link": "https://www.turnerlibros.com/wp-content/uploads/2021/02/ejemplo.pdf",
+                    "caption": "Te comparto la informacion de los productos"
+                }
+        }
+    else:
+        data=data_inicial(numero)
+    #Convertir el diccionario a formato JSON
+    data = json.dumps(data)
+
+    tkn = "EAApgHYrrpPkBO7vP46IL4ih3CT7M1QXQTZCWDO29lUArch4IelhZABgwFhMhWN9fpexrNKv5NMnhkilXXgD3sFOzYf2Xi3sTwMggClvcx852kWmZAF47vfZBYbnjKqw7FtGhLEBEPKQGoo73pzKMa3zzEvZCSm9mXnvb2uoJHICm7zUd5c42wtmq0c93tkolHPYu5vc44OtVvJYgN"
+    bearer = "Bearer "+tkn
+
+    headers = {
+        "Content-Type" : "application/json",
+        "Authorization" : bearer
+    }
+
+    connection = http.client.HTTPSConnection("graph.facebook.com")
+
+    try:
+        url_req = "/v21.0/500359583168203/messages"
+        connection.request("POST","/v21.0/500359583168203/messages", data, headers) 
+        response = connection.getresponse()
+        
+        agregar_mensajes_log(json.dumps(numero))
+        
+        agregar_mensajes_log(json.dumps(response.read().decode()))
+    except Exception as e:
+        agregar_mensajes_log(json.dumps(e))
+    finally:
+        connection.close()
+
+def data_inicial(numero):
+    data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
@@ -444,53 +486,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 ]
             }
         }
-    elif "clkshare" in texto:
-        data={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "document",
-            "document": {
-                    "link": "https://www.turnerlibros.com/wp-content/uploads/2021/02/ejemplo.pdf",
-                    "caption": "Te comparto la informacion de los productos"
-                }
-        }
-    else:
-        data={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "🚀 Hola, visita mi web anderson-bastidas.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información del Curso. ❔\n2️⃣. Ubicación del local. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
-            }
-        }
-    #Convertir el diccionario a formato JSON
-    data = json.dumps(data)
-
-    tkn = "EAApgHYrrpPkBO7vP46IL4ih3CT7M1QXQTZCWDO29lUArch4IelhZABgwFhMhWN9fpexrNKv5NMnhkilXXgD3sFOzYf2Xi3sTwMggClvcx852kWmZAF47vfZBYbnjKqw7FtGhLEBEPKQGoo73pzKMa3zzEvZCSm9mXnvb2uoJHICm7zUd5c42wtmq0c93tkolHPYu5vc44OtVvJYgN"
-    bearer = "Bearer "+tkn
-
-    headers = {
-        "Content-Type" : "application/json",
-        "Authorization" : bearer
-    }
-
-    connection = http.client.HTTPSConnection("graph.facebook.com")
-
-    try:
-        url_req = "/v21.0/500359583168203/messages"
-        connection.request("POST","/v21.0/500359583168203/messages", data, headers) 
-        response = connection.getresponse()
-        
-        agregar_mensajes_log(json.dumps(numero))
-        
-        agregar_mensajes_log(json.dumps(response.read().decode()))
-    except Exception as e:
-        agregar_mensajes_log(json.dumps(e))
-    finally:
-        connection.close()
+    return data
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
