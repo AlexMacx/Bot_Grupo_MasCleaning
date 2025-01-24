@@ -109,8 +109,8 @@ def recibir_mensajes(req):
                 if tipo == 'button':
                     tipo_boton = messages["button"]["payload"]
 
-                    if tipo_boton == "PAYLOAD":
-                        texto = messages["button"]["text"]
+                    if tipo_boton == "clkshare":
+                        texto = tipo_boton
                         numero = messages['from']
                         numero = extrae_numero(numero)
 
