@@ -1,0 +1,14 @@
+{
+    "context": {
+        "from": "15551901535",
+        "id": "wamid.HBgNNTIxNTUxMDA0NTQ1NxUCABEYEjE1Q0FCRDgyMTc1OTIwNDQ5MwA="
+    },
+    "from": "5215510045457",
+    "id": "wamid.HBgNNTIxNTUxMDA0NTQ1NxUCABIYFDNGRjFBMkM1NTVDNkYzNkFCNjhEAA==",
+    "timestamp": "1737930048",
+    "type": "button",
+    "button": {
+        "payload": "clkmc",
+        "text": "Ya soy parte de MC"
+    }
+}

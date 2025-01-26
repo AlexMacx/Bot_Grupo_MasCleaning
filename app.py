@@ -107,14 +107,11 @@ def recibir_mensajes(req):
 
                         enviar_mensajes_whatsapp(texto, numero)
                 if tipo == 'button':
-                    tipo_boton = messages["button"]["payload"]
-
-                    if tipo_boton == "clkshare":
-                        texto = tipo_boton
-                        numero = messages['from']
-                        numero = extrae_numero(numero)
-
-                        enviar_mensajes_whatsapp(texto, numero)
+                    texto = messages["button"]["payload"]
+                    numero = messages['from']
+                    numero = extrae_numero(numero)
+                    agregar_mensajes_log("type button sent: "+texto)
+                    enviar_mensajes_whatsapp(texto, numero)
                 
                 if 'text' in messages:
                     texto = messages['text']['body']
@@ -220,7 +217,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "📅 Horario de Atención : Lunes a Viernes. \n🕜 Horario : 9:00 am a 5:00 pm 🤓"
             }
         }
-    elif "0" in texto:
+    elif "clkmc" in texto:
         data = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -405,23 +402,13 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Compartenos tu dirreción para agendar entrega"
             }
         }
-
     elif "clkshare" in texto:
-        data_list = []
-        data1={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "document",
-            "document": {
-                    "link": "https://www.turnerlibros.com/wp-content/uploads/2021/02/ejemplo.pdf",
-                    "caption": "Te comparto la informacion de los productos"
-                }
-        }
+        data=data_loop_inicial(numero)
     else:
         data=data_inicial(numero)
     #Convertir el diccionario a formato JSON
-    data = json.dumps(data)
+    if type(data) is not list:
+        data = json.dumps(data)
 
     tkn = "EAApgHYrrpPkBO7vP46IL4ih3CT7M1QXQTZCWDO29lUArch4IelhZABgwFhMhWN9fpexrNKv5NMnhkilXXgD3sFOzYf2Xi3sTwMggClvcx852kWmZAF47vfZBYbnjKqw7FtGhLEBEPKQGoo73pzKMa3zzEvZCSm9mXnvb2uoJHICm7zUd5c42wtmq0c93tkolHPYu5vc44OtVvJYgN"
     bearer = "Bearer "+tkn
@@ -435,12 +422,19 @@ def enviar_mensajes_whatsapp(texto, numero):
 
     try:
         url_req = "/v21.0/500359583168203/messages"
-        connection.request("POST","/v21.0/500359583168203/messages", data, headers) 
-        response = connection.getresponse()
-        
-        agregar_mensajes_log(json.dumps(numero))
-        
-        agregar_mensajes_log(json.dumps(response.read().decode()))
+        if type(data) is not list:
+            connection.request("POST",url_req, data, headers)
+            response = connection.getresponse()
+            agregar_mensajes_log(json.dumps(numero))
+            agregar_mensajes_log(json.dumps(response.read().decode()))
+        else:
+            indice = 0
+            for data_item in data:
+                indice+=1
+                connection.request("POST",url_req, data_item, headers)
+                response = connection.getresponse()
+                agregar_mensajes_log("número "+str(indice)+": "+json.dumps(numero))
+                agregar_mensajes_log("número "+str(indice)+": "+json.dumps(response.read().decode()))
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
@@ -541,10 +535,10 @@ def data_loop_inicial(numero):
                     "caption": "Apertura Punto de Venta"
                 }
         }
-    data_loop_list.append(data1)
-    data_loop_list.append(data2)
-    data_loop_list.append(data3)
-    data_loop_list.append(data4)
+    data_loop_list.append(json.dumps(data1))
+    data_loop_list.append(json.dumps(data2))
+    data_loop_list.append(json.dumps(data3))
+    data_loop_list.append(json.dumps(data4))
     return data_loop_list
 
 if __name__=='__main__':
