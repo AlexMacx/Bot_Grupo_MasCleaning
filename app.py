@@ -407,7 +407,8 @@ def enviar_mensajes_whatsapp(texto, numero):
         }
 
     elif "clkshare" in texto:
-        data={
+        data_list = []
+        data1={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
@@ -482,11 +483,69 @@ def data_inicial(numero):
                                 "payload": "clkshare"
                             }
                         ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkmc"
+                            }
+                        ]
                     }
                 ]
             }
         }
     return data
+def data_loop_inicial(numero):
+    data_loop_list = []
+    data1={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "video",
+            "video": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init1.mp4",
+                "caption": "Video ilustrativo 1"
+            }
+        }
+    data2={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "video",
+            "video": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
+                "caption": "Video ilustrativo 2"
+            }
+        }
+    data3={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "document",
+            "document": {
+                    "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf",
+                    "caption": "Listado de Precios 2025"
+                }
+        }
+    data4={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "document",
+            "document": {
+                    "link": "https://bot-grupo-mascleaning.onrender.com/static/o-punto-venta.pdf",
+                    "caption": "Apertura Punto de Venta"
+                }
+        }
+    data_loop_list.append(data1)
+    data_loop_list.append(data2)
+    data_loop_list.append(data3)
+    data_loop_list.append(data4)
+    return data_loop_list
 
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
