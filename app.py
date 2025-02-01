@@ -131,7 +131,7 @@ def enviar_mensajes_whatsapp(texto, numero):
 
     if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")):
         data=data_inicial(numero)
-    elif (texto.__contains__("clkmc") or texto.__contains__("0")):
+    elif (texto.__contains__("clkmc") or (texto.__contains__("0") and len(texto)==1)):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = {
             "messaging_product": "whatsapp",
@@ -143,22 +143,14 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝"
             }
         }
-    elif texto.__contains__("1"):
+    elif (texto.__contains__("1") and len(texto)==1):
         data=data_busca_proveedor(numero)
     elif "clk_cotiza" in texto:
         data = data_proceso_compra_mc(numero)
     elif "clk_precios_cat" in texto:
         data=data_lista_precios(numero)
-    elif "4" in texto:
-        data={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "audio",
-            "audio": {
-                "link": "https://filesamples.com/samples/audio/mp3/sample1.mp3"
-            }
-        }
+    elif "2" in texto:
+        data=data_abrir_punto_venta(numero)
     elif "5" in texto:
         data = {
             "messaging_product": "whatsapp",
@@ -587,7 +579,7 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clkshare"
+                                "payload": "clk_tienda"
                             }
                         ]
                     },
@@ -598,7 +590,40 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clkmc"
+                                "payload": "clk_local"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "2",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_neighbor"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "3",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_other"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "4",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "menu_0"
                             }
                         ]
                     }
