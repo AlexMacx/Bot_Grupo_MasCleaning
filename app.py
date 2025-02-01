@@ -110,7 +110,7 @@ def recibir_mensajes(req):
                     texto = messages["button"]["payload"]
                     numero = messages['from']
                     numero = extrae_numero(numero)
-                    agregar_mensajes_log("type button sent: "+texto)
+                    agregar_mensajes_log("type button: "+texto)
                     enviar_mensajes_whatsapp(texto, numero)
                 
                 if 'text' in messages:
@@ -129,53 +129,25 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
-    if "hola" in texto:
-        data=data_inicial(numero) 
-    elif "otro" in texto:
-        data={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "video",
-            "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4",
-                "caption": " Hola, Bienvenido a Mas Cleaning."
-            }
-        }
-    elif "1" in texto:
-        data={
+    if "hola" or "tardes" or "disponible" in texto:
+        data=data_inicial(numero)
+    elif "clkmc" or "0" in texto:
+        data = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝\n0️⃣. Regresar al Menú. 🕜"
             }
         }
-    elif "2" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "type": "location",
-            "location": {
-                "latitude": "-12.067158831865067",
-                "longitude": "-77.03377940839486",
-                "name": "Estadio Nacional del Perú",
-                "address": "Cercado de Lima"
-            }
-        }
-    elif "3" in texto:
-        data={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "document",
-            "document": {
-                    "link": "https://www.turnerlibros.com/wp-content/uploads/2021/02/ejemplo.pdf",
-                    "caption": "Temario del Curso #001"
-                }
-            }
+    elif "1" in texto:
+        data=data_busca_proveedor(numero)
+    elif "clk_cotiza" in texto:
+        data = data_proceso_compra_mc(numero)
+    elif "clk_precios_cat" in texto:
+        data=data_lista_precios(numero)
     elif "4" in texto:
         data={
             "messaging_product": "whatsapp",
@@ -215,17 +187,6 @@ def enviar_mensajes_whatsapp(texto, numero):
             "text": {
                 "preview_url": False,
                 "body": "📅 Horario de Atención : Lunes a Viernes. \n🕜 Horario : 9:00 am a 5:00 pm 🤓"
-            }
-        }
-    elif "clkmc" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "🚀 Hola, visita mi web anderson-bastidas.com para más información.\n \n📌Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. Información del Curso. ❔\n2️⃣. Ubicación del local. 📍\n3️⃣. Enviar temario en PDF. 📄\n4️⃣. Audio explicando curso. 🎧\n5️⃣. Video de Introducción. ⏯️\n6️⃣. Hablar con AnderCode. 🙋‍♂️\n7️⃣. Horario de Atención. 🕜 \n0️⃣. Regresar al Menú. 🕜"
             }
         }
     elif "boton" in texto:
@@ -402,8 +363,6 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Compartenos tu dirreción para agendar entrega"
             }
         }
-    elif "clkshare" in texto:
-        data=data_loop_inicial(numero)
     else:
         data=data_inicial(numero)
     #Convertir el diccionario a formato JSON
@@ -430,11 +389,11 @@ def enviar_mensajes_whatsapp(texto, numero):
         else:
             indice = 0
             for data_item in data:
-                indice+=1
                 connection.request("POST",url_req, data_item, headers)
                 response = connection.getresponse()
                 agregar_mensajes_log("número "+str(indice)+": "+json.dumps(numero))
                 agregar_mensajes_log("número "+str(indice)+": "+json.dumps(response.read().decode()))
+                indice+=1
     except Exception as e:
         agregar_mensajes_log(json.dumps(e))
     finally:
@@ -502,28 +461,28 @@ def data_loop_inicial(numero):
             "type": "video",
             "video": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init1.mp4",
-                "caption": "Video ilustrativo 1"
+                "caption": "Video ilustrativo 1, ingresa 0 para continuar"
             }
         }
     data2={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
-            "type": "video",
-            "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
-                "caption": "Video ilustrativo 2"
-            }
+            "type": "document",
+            "document": {
+                    "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf",
+                    "caption": "Listado de Precios 2025, ingresa 0 para continuar"
+                }
         }
     data3={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
-            "type": "document",
-            "document": {
-                    "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf",
-                    "caption": "Listado de Precios 2025"
-                }
+            "type": "video",
+            "video": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
+                "caption": "Video ilustrativo 2, ingresa 0 para continuar"
+            }
         }
     data4={
             "messaging_product": "whatsapp",
@@ -532,7 +491,7 @@ def data_loop_inicial(numero):
             "type": "document",
             "document": {
                     "link": "https://bot-grupo-mascleaning.onrender.com/static/o-punto-venta.pdf",
-                    "caption": "Apertura Punto de Venta"
+                    "caption": "Apertura Punto de Venta, ingresa 0 para continuar"
                 }
         }
     data_loop_list.append(json.dumps(data1))
@@ -540,6 +499,248 @@ def data_loop_inicial(numero):
     data_loop_list.append(json.dumps(data3))
     data_loop_list.append(json.dumps(data4))
     return data_loop_list
-
+def data_busca_proveedor(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "busca_proveedor_mc",
+                "language": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/img_init.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_cotiza"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_precios_cat"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    return data
+def data_abrir_punto_venta(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "abrir_punto_venta_mc",
+                "language": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "video",
+                                "video": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkshare"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkmc"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    return data
+def data_lista_precios(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "lista_precios_mc",
+                "language": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "document",
+                                "document": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "0"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    return data
+def data_ubicacion_mc(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "ubicacion_mc",
+                "language": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "video",
+                                "video": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkshare"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkmc"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    return data
+def data_proceso_compra_mc(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "proceso_compra_mc",
+                "language": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "image",
+                                "image": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/img_compra_cotiza.jpg"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "0"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    return data
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
