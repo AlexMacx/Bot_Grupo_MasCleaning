@@ -129,28 +129,28 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
-    if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")):
+    if ("hola" in texto or "tardes" in texto or "disponible" in texto):
         agregar_mensajes_log("Entra data inical: "+texto)
         data=data_inicial(numero)
-    elif (texto.__contains__("clkshare")):
+    elif "clkshare" in texto:
         agregar_mensajes_log("Entra loop inicial: "+texto)
         data = data_loop_inicial(numero)
-    elif (texto.__contains__("clkmc") or (len(texto)==1 and texto.__contains__("0"))):
+    elif ("clkmc" in texto) or ("0" in texto and len(texto)==1):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = data_menu_principal(numero)
-    elif (len(texto)==1 and texto.__contains__("1")):
+    elif ("1" in texto and len(texto)==1):
         agregar_mensajes_log("Entra busca proveedor o 1: "+texto)
         data=data_busca_proveedor(numero)
-    elif (len(texto)==1 and texto.__contains__("2")) in texto:
+    elif ("2" in texto and len(texto)==1):
         agregar_mensajes_log("Entra punto venta o 2: "+texto)
         data=data_abrir_punto_venta(numero)
-    elif (texto.__contains__("clk_precios_cat") or (len(texto)==1 and texto.__contains__("3"))) in texto:
+    elif ("clk_precios_cat" in texto or ("3" in texto and len(texto) == 1)):
         agregar_mensajes_log("Entra clk_precios_cat o 3: "+texto)
         data=data_lista_precios(numero)
-    elif (len(texto)==1 and texto.__contains__("4")) in texto:
+    elif ("4" in texto and len(texto) == 1):
         agregar_mensajes_log("Entra ubicacion o 4: "+texto)
         data=data_ubicacion_mc(numero)
-    elif (texto.__contains__("clk_cotiza") or (len(texto)==1 and texto.__contains__("5"))) in texto:
+    elif ("clk_cotiza" in texto or ("5" in texto and len(texto)==1)):
         agregar_mensajes_log("Entra clk_cotiza o 5: "+texto)
         data = data_proceso_compra_mc(numero)
     elif "chkentrega" in texto:
