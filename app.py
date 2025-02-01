@@ -129,9 +129,9 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
-    if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")) in texto:
+    if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")):
         data=data_inicial(numero)
-    elif (texto.__contains__("clkmc") or texto.__contains("0")) in texto:
+    elif (texto.__contains__("clkmc") or texto.__contains("0")):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = {
             "messaging_product": "whatsapp",
