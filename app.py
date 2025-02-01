@@ -134,7 +134,7 @@ def enviar_mensajes_whatsapp(texto, numero):
         data=data_inicial(numero)
     elif (texto.__contains__("clkshare")):
         agregar_mensajes_log("Entra loop inicial: "+texto)
-        data = data_loop_inicial
+        data = data_loop_inicial(numero)
     elif (texto.__contains__("clkmc") or (len(texto)==1 and texto.__contains__("0"))):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = data_menu_principal(numero)
