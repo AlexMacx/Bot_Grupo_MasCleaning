@@ -131,7 +131,7 @@ def enviar_mensajes_whatsapp(texto, numero):
 
     if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")):
         data=data_inicial(numero)
-    elif (texto.__contains__("clkmc") or texto.__contains("0")):
+    elif (texto.__contains__("clkmc") or texto.__contains__("0")):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = {
             "messaging_product": "whatsapp",
@@ -143,7 +143,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝"
             }
         }
-    elif "1" in texto:
+    elif texto.__contains__("1"):
         data=data_busca_proveedor(numero)
     elif "clk_cotiza" in texto:
         data = data_proceso_compra_mc(numero)
