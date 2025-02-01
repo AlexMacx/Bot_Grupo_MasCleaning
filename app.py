@@ -623,7 +623,7 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "menu_0"
+                                "payload": "clkmc"
                             }
                         ]
                     }
@@ -665,7 +665,7 @@ def data_lista_precios(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "0"
+                                "payload": "clkmc"
                             }
                         ]
                     }
@@ -760,7 +760,7 @@ def data_proceso_compra_mc(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "0"
+                                "payload": "clkmc"
                             }
                         ]
                     }
