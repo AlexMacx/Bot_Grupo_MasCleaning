@@ -130,221 +130,29 @@ def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
     if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")):
+        agregar_mensajes_log("Entra data inical: "+texto)
         data=data_inicial(numero)
-    elif (texto.__contains__("clkmc") or (texto.__contains__("0") and len(texto)==1)):
+    elif (texto.__contains__("clkshare")):
+        agregar_mensajes_log("Entra loop inicial: "+texto)
+        data = data_loop_inicial
+    elif (texto.__contains__("clkmc") or (len(texto)==1 and texto.__contains__("0"))):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝"
-            }
-        }
-    elif (texto.__contains__("1") and len(texto)==1):
+        data = data_menu_principal(numero)
+    elif (len(texto)==1 and texto.__contains__("1")):
+        agregar_mensajes_log("Entra busca proveedor o 1: "+texto)
         data=data_busca_proveedor(numero)
-    elif "clk_cotiza" in texto:
-        data = data_proceso_compra_mc(numero)
-    elif "clk_precios_cat" in texto:
-        data=data_lista_precios(numero)
-    elif "2" in texto:
+    elif (len(texto)==1 and texto.__contains__("2")) in texto:
+        agregar_mensajes_log("Entra punto venta o 2: "+texto)
         data=data_abrir_punto_venta(numero)
-    elif "5" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "text": {
-                "preview_url": True,
-                "body": "Introduccion al curso! https://youtu.be/6ULOE2tGlBM"
-            }
-        }
-    elif "6" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "🤝 En breve me pondre en contacto contigo. 🤓"
-            }
-        }
-    elif "7" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "📅 Horario de Atención : Lunes a Viernes. \n🕜 Horario : 9:00 am a 5:00 pm 🤓"
-            }
-        }
-    elif "boton" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "recipient_type": "individual",
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body": {
-                    "text": "¿Confirmas tu registro?"
-                },
-                "footer": { # optional
-                    "text": "Selecciona una de las opciones"
-                },
-                "action": {
-                    "buttons": [
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnsi",
-                                "title": "Si" 
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnno",
-                                "title": "No" 
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnmaybe",
-                                "title": "Tal Vez" 
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    elif "btnsi" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Muchas gracias por aceptar."
-            }
-        }
-    elif "btnno" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Es una lastima."
-            }
-        }
-    elif "btnmaybe" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Estaré a la espera."
-            }
-        }
-    elif "lista" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "recipient_type": "individual",
-            "type": "interactive",
-            "interactive": {
-                "type": "list",
-                "header": {
-                    "type": "text",
-                    "text": "Opciones MC"
-                },
-                "body": {
-                    "text": "Selecciona algúna opción."
-                },
-                "footer": {
-                    "text": "Selecciona una de las opciones para poder ayudarte."
-                },
-                "action": {
-                    "button": "Ver Opciones",
-                    "sections":[
-                        {
-                            "title":"Compra y Venta",
-                            "rows": [
-                                {
-                                    "id":"chkcompra",
-                                    "title": "Comprar",
-                                    "description": "Compra los mejores artículos de tecnología."
-                                },
-                                {
-                                    "id":"chkventa",
-                                    "title": "Vender",
-                                    "description": "Vende lo que ya no estes usando."
-                                }
-                            ]
-                        },
-                        {
-                            "title":"Distribución y Entrega",
-                            "rows": [
-                                {
-                                    "id":"chklocal",
-                                    "title": "Local",
-                                    "description": "Compra los mejores artículos de tecnología."
-                                },
-                                {
-                                    "id":"chkentrega",
-                                    "title": "Entrega",
-                                    "description": "La entrega se realiza todos los días."
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
-    elif "chkcompra" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Muchas gracias por tu compra, este es el resumen."
-            }
-        }
-    elif "chkventa" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Tu producto está a punto de tener mucha suerte."
-            }
-        }
-    elif "chklocal" in texto:
-        data = {
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "type": "location",
-            "location": {
-                "latitude": "-12.067158831865067",
-                "longitude": "-77.03377940839486",
-                "name": "Matriz de distribución",
-                "address": "Calle 1 equina calle 2"
-            }
-        }
+    elif (texto.__contains__("clk_precios_cat") or (len(texto)==1 and texto.__contains__("3"))) in texto:
+        agregar_mensajes_log("Entra clk_precios_cat o 3: "+texto)
+        data=data_lista_precios(numero)
+    elif (len(texto)==1 and texto.__contains__("4")) in texto:
+        agregar_mensajes_log("Entra ubicacion o 4: "+texto)
+        data=data_ubicacion_mc(numero)
+    elif (texto.__contains__("clk_cotiza") or (len(texto)==1 and texto.__contains__("5"))) in texto:
+        agregar_mensajes_log("Entra clk_cotiza o 5: "+texto)
+        data = data_proceso_compra_mc(numero)
     elif "chkentrega" in texto:
         data = {
             "messaging_product": "whatsapp",
@@ -357,6 +165,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     else:
+        agregar_mensajes_log("Entra else data inical: "+texto)
         data=data_inicial(numero)
     #Convertir el diccionario a formato JSON
     if type(data) is not list:
@@ -392,6 +201,18 @@ def enviar_mensajes_whatsapp(texto, numero):
     finally:
         connection.close()
 
+def data_menu_principal(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝"
+            }
+        }
+    return data
 def data_inicial(numero):
     data={
             "messaging_product": "whatsapp",
@@ -454,7 +275,7 @@ def data_loop_inicial(numero):
             "type": "video",
             "video": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init1.mp4",
-                "caption": "Video ilustrativo 1, ingresa 0 para continuar"
+                "caption": "Video ilustrativo 1."
             }
         }
     data2={
@@ -464,7 +285,7 @@ def data_loop_inicial(numero):
             "type": "document",
             "document": {
                     "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf",
-                    "caption": "Listado de Precios 2025, ingresa 0 para continuar"
+                    "caption": "Listado de Precios 2025."
                 }
         }
     data3={
@@ -474,7 +295,7 @@ def data_loop_inicial(numero):
             "type": "video",
             "video": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
-                "caption": "Video ilustrativo 2, ingresa 0 para continuar"
+                "caption": "Video ilustrativo 2."
             }
         }
     data4={
@@ -484,13 +305,37 @@ def data_loop_inicial(numero):
             "type": "document",
             "document": {
                     "link": "https://bot-grupo-mascleaning.onrender.com/static/o-punto-venta.pdf",
-                    "caption": "Apertura Punto de Venta, ingresa 0 para continuar"
+                    "caption": "Información de Apertura Punto de Venta."
                 }
+        }
+    data5={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "body": {
+                    "text": "Da click para regresar al Menú Principal."
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clkmc",
+                                "title": "Menú Principal"
+                            }
+                        }
+                    ]
+                }
+            }
         }
     data_loop_list.append(json.dumps(data1))
     data_loop_list.append(json.dumps(data2))
     data_loop_list.append(json.dumps(data3))
     data_loop_list.append(json.dumps(data4))
+    data_loop_list.append(json.dumps(data5))
     return data_loop_list
 def data_busca_proveedor(numero):
     data={
@@ -689,9 +534,12 @@ def data_ubicacion_mc(numero):
                         "type": "header",
                         "parameters": [
                             {
-                                "type": "video",
-                                "video": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
+                                "type": "location",
+                                "location": {
+                                    "latitude": "18.96996615136263",
+                                    "longitude": "-98.30085274771714",
+                                    "name": "Grupo Más Cleaning.",
+                                    "address": "Grupo Más Cleaning, 72850 Santa Clara Ocoyucan, Pue."
                                 }
                             }
                         ]
@@ -704,17 +552,6 @@ def data_ubicacion_mc(numero):
                         "type": "button",
                         "sub_type": "quick_reply",
                         "index": "0",
-                        "parameters": [
-                            {
-                                "type": "payload",
-                                "payload": "clkshare"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "button",
-                        "sub_type": "quick_reply",
-                        "index": "1",
                         "parameters": [
                             {
                                 "type": "payload",
