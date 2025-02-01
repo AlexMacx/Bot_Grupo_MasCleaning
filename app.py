@@ -129,9 +129,9 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
-    if ("hola" or "tardes" or "disponible") in texto:
+    if (texto.__contains__("hola") or texto.__contains__("tardes") or texto.__contains__("disponible")) in texto:
         data=data_inicial(numero)
-    elif ("clkmc" or "0") in texto:
+    elif (texto.__contains__("clkmc") or texto.__contains("0")) in texto:
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = {
             "messaging_product": "whatsapp",
@@ -140,7 +140,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝\n0️⃣. Regresar al Menú. 🕜"
+                "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝"
             }
         }
     elif "1" in texto:
