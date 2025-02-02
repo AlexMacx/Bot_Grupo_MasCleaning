@@ -408,7 +408,7 @@ def data_abrir_punto_venta(numero):
                             {
                                 "type": "video",
                                 "video": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/vid_punto_de_venta.mp4"
                                 }
                             }
                         ]
