@@ -385,6 +385,17 @@ def data_busca_proveedor(numero):
                                 "payload": "clk_precios_cat"
                             }
                         ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "2",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkmc"
+                            }
+                        ]
                     }
                 ]
             }
@@ -408,7 +419,7 @@ def data_abrir_punto_venta(numero):
                             {
                                 "type": "video",
                                 "video": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/vid_punto_de_venta.mp4"
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video_punto_de_venta.mp4"
                                 }
                             }
                         ]
