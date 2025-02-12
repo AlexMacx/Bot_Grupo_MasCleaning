@@ -202,14 +202,58 @@ def enviar_mensajes_whatsapp(texto, numero):
         connection.close()
 
 def data_menu_principal(numero):
-    data={
+    data = {
             "messaging_product": "whatsapp",
-            "recipient_type": "individual",
             "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "🚀📌Hola, ¿Cómo podemos apoyarte? Por favor, ingresa un número #️⃣ para recibir información.\n \n1️⃣. SER SU PROVEDOR DE PRODUCTOS DE LIMPIEZA. 🔗\n2️⃣. ABRIR UN PUNTO DE VENTA DE PRODUCTOS DE LIMPIEZA. 🏬\n3️⃣. CONOCER LISTA DE PRECIOS. 💲📄\n4️⃣. DONDE ESTÁN UBICADOS. 📍\n5️⃣. PROCESO DE COMPRA. 📝"
+            "recipient_type": "individual",
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "body": {
+                    "text": "🚀📌Hola, ¿Cómo podemos apoyarte?"
+                },
+                "footer": { # optional
+                    "text": "Selecciona la opción de tu preferencia para recibir información."
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnhp",
+                                "title": "Hacer Pedido" 
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnde",
+                                "title": "Dudas Elaboración" 
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnlp",
+                                "title": "Lista de Precios" 
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnot",
+                                "title": "Otros" 
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "btnmp",
+                                "title": "Menu Principal" 
+                            }
+                        }
+                    ]
+                }
             }
         }
     return data
