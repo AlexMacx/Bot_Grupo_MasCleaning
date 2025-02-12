@@ -231,7 +231,7 @@ def data_inicial(numero):
                             {
                                 "type": "video",
                                 "video": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/img_init_2.jpg"
                                 }
                             }
                         ]
