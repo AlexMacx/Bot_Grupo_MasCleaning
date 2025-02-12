@@ -210,10 +210,7 @@ def data_menu_principal(numero):
             "interactive": {
                 "type": "button",
                 "body": {
-                    "text": "🚀📌Hola, ¿Cómo podemos apoyarte?"
-                },
-                "footer": { # optional
-                    "text": "Selecciona la opción de tu preferencia para recibir información."
+                    "text": "🚀📌Hola, ¿Cómo podemos apoyarte? Selecciona la opción de tu preferencia para recibir información."
                 },
                 "action": {
                     "buttons": [
