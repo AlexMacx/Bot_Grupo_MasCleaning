@@ -229,8 +229,8 @@ def data_inicial(numero):
                         "type": "header",
                         "parameters": [
                             {
-                                "type": "video",
-                                "video": {
+                                "type": "image",
+                                "image": {
                                     "link": "https://bot-grupo-mascleaning.onrender.com/static/img_init_2.jpg"
                                 }
                             }
