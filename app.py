@@ -341,7 +341,7 @@ def data_otro(numero):
             "type": "image",
             "image": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/img_otros.jpg",
-                "caption": "Saludos, soy José Luis Hernandez, tu asesor personal, ¿cómo puedo apoyarte? Escribeme o llamame por este medio, será un placer atenderte."
+                "caption": "Saludos, soy José Luis Hernandez, ¿cómo puedo apoyarte? \nEscribeme o llamame por este medio, será un placer atenderte."
             }
         }
     return data
@@ -598,49 +598,34 @@ def data_proceso_compra_mc(numero):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
-            "type": "template",
-            "template": {
-                "name": "proceso_compra_mc",
-                "language": {
-                    "code": "es_MX"
-                },
-                "components": [
+            "type": "button",
+            "header": {
+                "type": "image",
+                "image": {
+                    "link": "https://bot-grupo-mascleaning.onrender.com/static/img_compra_cotiza.jpg"
+                }
+            },
+            "body": {
+                "text": "Para hacer un pedido, sigue los pasos de la imagen."
+            },
+            "footer": {
+                "text": "¿Cómo hacer un pedido?"
+            },
+            "action": {
+                "buttons": [
                     {
-                        "type": "header",
-                        "parameters": [
-                            {
-                                "type": "image",
-                                "image": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/img_compra_cotiza.jpg"
-                                }
-                            }
-                        ]
+                        "type": "reply",
+                        "reply": {
+                            "id": "clklpricess",
+                            "title": "Lista de Precios"
+                        }
                     },
                     {
-                        "type": "body",
-                        "parameters": []
-                    },
-                    {
-                        "type": "button",
-                        "sub_type": "quick_reply",
-                        "index": "0",
-                        "parameters": [
-                            {
-                                "type": "payload",
-                                "payload": "clklpricess"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "button",
-                        "sub_type": "quick_reply",
-                        "index": "1",
-                        "parameters": [
-                            {
-                                "type": "payload",
-                                "payload": "clkmc"
-                            }
-                        ]
+                        "type": "reply",
+                        "reply": {
+                            "id": "clkmc",
+                            "title": "Atras"
+                        }
                     }
                 ]
             }
