@@ -144,14 +144,14 @@ def enviar_mensajes_whatsapp(texto, numero):
     elif ("2" in texto and len(texto)==1):
         agregar_mensajes_log("Entra punto venta o 2: "+texto)
         data=data_abrir_punto_venta(numero)
-    elif ("clk_precios_cat" in texto or ("3" in texto and len(texto) == 1)):
-        agregar_mensajes_log("Entra clk_precios_cat o 3: "+texto)
+    elif ("clklpricess" in texto):
+        agregar_mensajes_log("Entra clklpricess: "+texto)
         data=data_lista_precios(numero)
     elif ("4" in texto and len(texto) == 1):
         agregar_mensajes_log("Entra ubicacion o 4: "+texto)
         data=data_ubicacion_mc(numero)
-    elif ("clk_cotiza" in texto or ("5" in texto and len(texto)==1)):
-        agregar_mensajes_log("Entra clk_cotiza o 5: "+texto)
+    elif ("clkorder" in texto):
+        agregar_mensajes_log("Entra clkorder: "+texto)
         data = data_proceso_compra_mc(numero)
     elif "chkentrega" in texto:
         data = {
@@ -250,7 +250,7 @@ def data_menu_principal(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clklprices"
+                                "payload": "clklpricess"
                             }
                         ]
                     },
@@ -572,7 +572,7 @@ def data_lista_precios(numero):
                             {
                                 "type": "document",
                                 "document": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf"
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/Listado_de_Precios_2025.pdf"
                                 }
                             }
                         ]
@@ -585,6 +585,17 @@ def data_lista_precios(numero):
                         "type": "button",
                         "sub_type": "quick_reply",
                         "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkorder"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
                         "parameters": [
                             {
                                 "type": "payload",
@@ -672,6 +683,17 @@ def data_proceso_compra_mc(numero):
                         "type": "button",
                         "sub_type": "quick_reply",
                         "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clklpricess"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
                         "parameters": [
                             {
                                 "type": "payload",
