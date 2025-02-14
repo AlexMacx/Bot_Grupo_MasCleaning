@@ -129,13 +129,13 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
-    if ("hola" in texto or "tardes" in texto or "disponible" in texto):
-        agregar_mensajes_log("Entra data inical: "+texto)
-        data=data_inicial(numero)
+    if ("hola" in texto or "tardes" in texto or "disponible" in texto or "clkmm" in texto):
+        agregar_mensajes_log("Entra menu inicial: "+texto)
+        data=data_menu_inicial(numero)
     elif "clkshare" in texto:
         agregar_mensajes_log("Entra loop inicial: "+texto)
         data = data_loop_inicial(numero)
-    elif ("clkmc" in texto) or ("0" in texto and len(texto)==1):
+    elif ("clkmc" in texto):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = data_menu_principal(numero)
     elif ("1" in texto and len(texto)==1):
@@ -165,8 +165,8 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     else:
-        agregar_mensajes_log("Entra else data inical: "+texto)
-        data=data_inicial(numero)
+        agregar_mensajes_log("Entra else menu inical: "+texto)
+        data=data_menu_inicial(numero)
     #Convertir el diccionario a formato JSON
     if type(data) is not list:
         data = json.dumps(data)
@@ -204,57 +204,83 @@ def enviar_mensajes_whatsapp(texto, numero):
 def data_menu_principal(numero):
     data = {
             "messaging_product": "whatsapp",
-            "to": numero,
             "recipient_type": "individual",
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body": {
-                    "text": "🚀📌Hola, ¿Cómo podemos apoyarte? Selecciona la opción de tu preferencia para recibir información."
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "menu_inical_mc",
+                "language": {
+                    "code": "es_MX"
                 },
-                "action": {
-                    "buttons": [
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnhp",
-                                "title": "Hacer Pedido" 
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": []
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkorder"
                             }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnde",
-                                "title": "Dudas Elaboración" 
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkdoubts"
                             }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnlp",
-                                "title": "Lista de Precios" 
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "2",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clklprices"
                             }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnot",
-                                "title": "Otros" 
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "3",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkother"
                             }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "btnmp",
-                                "title": "Menu Principal" 
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "4",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkmm"
                             }
-                        }
-                    ]
-                }
+                        ]
+                    }
+                ]
             }
         }
     return data
-def data_inicial(numero):
+def data_menu_inicial(numero):
     data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
