@@ -598,36 +598,39 @@ def data_proceso_compra_mc(numero):
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
-            "type": "button",
-            "header": {
-                "type": "image",
-                "image": {
-                    "link": "https://bot-grupo-mascleaning.onrender.com/static/img_compra_cotiza.jpg"
-                }
-            },
-            "body": {
-                "text": "Para hacer un pedido, sigue los pasos de la imagen."
-            },
-            "footer": {
-                "text": "¿Cómo hacer un pedido?"
-            },
-            "action": {
-                "buttons": [
-                    {
-                        "type": "reply",
-                        "reply": {
-                            "id": "clklpricess",
-                            "title": "Lista de Precios"
-                        }
-                    },
-                    {
-                        "type": "reply",
-                        "reply": {
-                            "id": "clkmc",
-                            "title": "Atras"
-                        }
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "header": {
+                    "type": "image",
+                    "image": {
+                        "link": "https://bot-grupo-mascleaning.onrender.com/static/img_compra_cotiza.jpg"
                     }
-                ]
+                },
+                "body": {
+                    "text": "Para hacer un pedido, sigue los pasos de la imagen."
+                },
+                "footer": {
+                    "text": "¿Cómo hacer un pedido?"
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clklpricess",
+                                "title": "Lista de Precios"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clkmc",
+                                "title": "Atras"
+                            }
+                        }
+                    ]
+                }
             }
         }
     return data
