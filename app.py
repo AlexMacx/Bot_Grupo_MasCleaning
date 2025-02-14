@@ -132,9 +132,9 @@ def enviar_mensajes_whatsapp(texto, numero):
     if ("hola" in texto or "tardes" in texto or "disponible" in texto or "clkmm" in texto):
         agregar_mensajes_log("Entra menu inicial: "+texto)
         data=data_menu_inicial(numero)
-    elif "clkshare" in texto:
-        agregar_mensajes_log("Entra loop inicial: "+texto)
-        data = data_loop_inicial(numero)
+    elif "clkother" in texto:
+        agregar_mensajes_log("Entra menu otro: "+texto)
+        data = data_otro(numero)
     elif ("clkmc" in texto):
         agregar_mensajes_log("entra clkmc o 0: "+texto)
         data = data_menu_principal(numero)
@@ -333,77 +333,18 @@ def data_menu_inicial(numero):
             }
         }
     return data
-def data_loop_inicial(numero):
-    data_loop_list = []
-    data1={
+def data_otro(numero):
+    data={
             "messaging_product": "whatsapp",
-            "recipient_type": "individual",
             "to": numero,
-            "type": "video",
-            "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init1.mp4",
-                "caption": "Video ilustrativo 1."
+            "recipient_type": "individual",
+            "type": "image",
+            "image": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/img_otros.jpg",
+                "caption": "Saludos, soy José Luis Hernandez, tu asesor personal, ¿cómo puedo apoyarte? Escribeme o llamame por este medio, será un placer atenderte."
             }
         }
-    data2={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "document",
-            "document": {
-                    "link": "https://bot-grupo-mascleaning.onrender.com/static/listado-precio-25.pdf",
-                    "caption": "Listado de Precios 2025."
-                }
-        }
-    data3={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "video",
-            "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
-                "caption": "Video ilustrativo 2."
-            }
-        }
-    data4={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "document",
-            "document": {
-                    "link": "https://bot-grupo-mascleaning.onrender.com/static/o-punto-venta.pdf",
-                    "caption": "Información de Apertura Punto de Venta."
-                }
-        }
-    data5={
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body": {
-                    "text": "Da click para regresar al Menú Principal."
-                },
-                "action": {
-                    "buttons": [
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "clkmc",
-                                "title": "Menú Principal"
-                            }
-                        }
-                    ]
-                }
-            }
-        }
-    data_loop_list.append(json.dumps(data1))
-    data_loop_list.append(json.dumps(data2))
-    data_loop_list.append(json.dumps(data3))
-    data_loop_list.append(json.dumps(data4))
-    data_loop_list.append(json.dumps(data5))
-    return data_loop_list
+    return data
 def data_busca_proveedor(numero):
     data={
             "messaging_product": "whatsapp",
