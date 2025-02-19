@@ -136,14 +136,14 @@ def enviar_mensajes_whatsapp(texto, numero):
         agregar_mensajes_log("Entra menu otro: "+texto)
         data = data_otro(numero)
     elif ("clkmc" in texto):
-        agregar_mensajes_log("entra clkmc o 0: "+texto)
+        agregar_mensajes_log("Entra clkmc o 0: "+texto)
         data = data_menu_principal(numero)
-    elif ("1" in texto and len(texto)==1):
-        agregar_mensajes_log("Entra busca proveedor o 1: "+texto)
-        data=data_busca_proveedor(numero)
-    elif ("2" in texto and len(texto)==1):
-        agregar_mensajes_log("Entra punto venta o 2: "+texto)
-        data=data_abrir_punto_venta(numero)
+    #elif ("1" in texto and len(texto)==1):
+    #    agregar_mensajes_log("Entra busca proveedor o 1: "+texto)
+    #    data=data_busca_proveedor(numero)
+    elif ("clkdoubts" in texto):
+        agregar_mensajes_log("Entra clkdoubts: "+texto)
+        data=data_dudas_elabora_mc(numero)
     elif ("clklpricess" in texto):
         agregar_mensajes_log("Entra clklpricess: "+texto)
         data=data_lista_precios(numero)
@@ -153,7 +153,13 @@ def enviar_mensajes_whatsapp(texto, numero):
     elif ("clkorder" in texto):
         agregar_mensajes_log("Entra clkorder: "+texto)
         data = data_proceso_compra_mc(numero)
-    elif "chkentrega" in texto:
+    elif ("clk_lmulti" in texto):
+        agregar_mensajes_log("Entra clkorder: "+texto)
+        data = data_limpia_multiusos(numero)
+    elif ("clk_ltrastes" in texto):
+        agregar_mensajes_log("Entra clkorder: "+texto)
+        data = data_lavatrastes(numero)
+    elif "chkentrega" in texto: #Posiblemente se quite
         data = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -345,6 +351,31 @@ def data_otro(numero):
             }
         }
     return data
+def data_limpia_multiusos(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "recipient_type": "individual",
+            "type": "video",
+            "video": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video_init1.mp4",
+                "caption": "Video elaboración Limpiador Multiusos."
+            }
+        }
+    return data
+def data_lavatrastes(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "recipient_type": "individual",
+            "type": "video",
+            "video": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video_init2.mp4",
+                "caption": "Video elaboración Lavatrastes."
+            }
+        }
+    return data
+#busca_proveedor no se usara más
 def data_busca_proveedor(numero):
     data={
             "messaging_product": "whatsapp",
@@ -409,14 +440,14 @@ def data_busca_proveedor(numero):
             }
         }
     return data
-def data_abrir_punto_venta(numero):
+def data_dudas_elabora_mc(numero):
     data={
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
             "type": "template",
             "template": {
-                "name": "abrir_punto_venta_mc",
+                "name": "dudas_elabora_mc",
                 "language": {
                     "code": "es_MX"
                 },
@@ -425,9 +456,9 @@ def data_abrir_punto_venta(numero):
                         "type": "header",
                         "parameters": [
                             {
-                                "type": "video",
-                                "video": {
-                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init1.mp4"
+                                "type": "document",
+                                "document": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/Listado_de_Precios_2025.pdf"
                                 }
                             }
                         ]
@@ -443,7 +474,7 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clk_tienda"
+                                "payload": "clk_deter"
                             }
                         ]
                     },
@@ -454,7 +485,7 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clk_local"
+                                "payload": "clk_ltrastes"
                             }
                         ]
                     },
@@ -465,7 +496,7 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clk_neighbor"
+                                "payload": "clk_suaviza"
                             }
                         ]
                     },
@@ -476,7 +507,7 @@ def data_abrir_punto_venta(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clk_other"
+                                "payload": "clk_smanos"
                             }
                         ]
                     },
@@ -484,6 +515,61 @@ def data_abrir_punto_venta(numero):
                         "type": "button",
                         "sub_type": "quick_reply",
                         "index": "4",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_lmulti"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "5",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_scapi"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "6",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_auto"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "7",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_otros"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "8",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clk_masc"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "9",
                         "parameters": [
                             {
                                 "type": "payload",
