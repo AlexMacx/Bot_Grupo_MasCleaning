@@ -154,11 +154,11 @@ def enviar_mensajes_whatsapp(texto, numero):
         agregar_mensajes_log("Entra clkorder: "+texto)
         data = data_proceso_compra_mc(numero)
     elif ("clk_lmulti" in texto):
-        agregar_mensajes_log("Entra clkorder: "+texto)
-        data = data_limpia_multiusos(numero)
+        agregar_mensajes_log("Entra clk_lmulti: "+texto)
+        data = data_elab_lmulti(numero)
     elif ("clk_ltrastes" in texto):
-        agregar_mensajes_log("Entra clkorder: "+texto)
-        data = data_lavatrastes(numero)
+        agregar_mensajes_log("Entra clk_ltrastes: "+texto)
+        data = data_elab_lavatrastes(numero)
     elif "chkentrega" in texto: #Posiblemente se quite
         data = {
             "messaging_product": "whatsapp",
@@ -351,6 +351,7 @@ def data_otro(numero):
             }
         }
     return data
+# Inicia respuesta a botones dfuncionalidad Dudas
 def data_limpia_multiusos(numero):
     data={
             "messaging_product": "whatsapp",
@@ -363,7 +364,7 @@ def data_limpia_multiusos(numero):
             }
         }
     return data
-def data_lavatrastes(numero):
+def data_elab_lavatrastes(numero):
     data={
             "messaging_product": "whatsapp",
             "to": numero,
@@ -375,6 +376,7 @@ def data_lavatrastes(numero):
             }
         }
     return data
+# Fin respuesta a botones dfuncionalidad Dudas
 #busca_proveedor no se usara más
 def data_busca_proveedor(numero):
     data={
@@ -719,6 +721,18 @@ def data_proceso_compra_mc(numero):
                 }
             }
         }
+    return data
+def data_elab_lmulti(numero):
+    data={
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": numero,
+        "type": "video",
+        "video": {
+            "link": "https://bot-grupo-mascleaning.onrender.com/static/video_lmulti.mp4",
+            "caption": "Video elaboración Limpiador Multiusos."
+        }
+}
     return data
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
