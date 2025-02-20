@@ -138,9 +138,10 @@ def enviar_mensajes_whatsapp(texto, numero):
     elif ("clkmc" in texto):
         agregar_mensajes_log("Entra clkmc o 0: "+texto)
         data = data_menu_principal(numero)
-    #elif ("1" in texto and len(texto)==1):
-    #    agregar_mensajes_log("Entra busca proveedor o 1: "+texto)
-    #    data=data_busca_proveedor(numero)
+    elif ("clk_suaviza" in texto):
+        agregar_mensajes_log("Entra clk_suaviza: "+texto)
+        data=data_elab_suaviza(numero)
+        #data=data_busca_proveedor(numero)
     elif ("clkdoubts" in texto):
         agregar_mensajes_log("Entra clkdoubts: "+texto)
         data=data_dudas_elabora_mc(numero)
@@ -361,6 +362,18 @@ def data_elab_lmulti(numero):
         "video": {
             "link": "https://bot-grupo-mascleaning.onrender.com/static/video-lmulti.mp4",
             "caption": "Video elaboración Limpiador Multiusos."
+        }
+    }
+    return data
+def data_elab_suaviza(numero):
+    data={
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": numero,
+        "type": "video",
+        "video": {
+            "link": "https://bot-grupo-mascleaning.onrender.com/static/video-jabon-liquido-rosa.mp4",
+            "caption": "Video elaboración Suavizante."
         }
     }
     return data
