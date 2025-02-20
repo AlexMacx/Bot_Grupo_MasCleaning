@@ -352,17 +352,17 @@ def data_otro(numero):
         }
     return data
 # Inicia respuesta a botones dfuncionalidad Dudas
-def data_limpia_multiusos(numero):
+def data_elab_lmulti(numero):
     data={
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "recipient_type": "individual",
-            "type": "video",
-            "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video_init1.mp4",
-                "caption": "Video elaboración Limpiador Multiusos."
-            }
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": numero,
+        "type": "video",
+        "video": {
+            "link": "https://bot-grupo-mascleaning.onrender.com/static/video_lmulti.mp4",
+            "caption": "Video elaboración Limpiador Multiusos."
         }
+    }
     return data
 def data_elab_lavatrastes(numero):
     data={
@@ -721,18 +721,6 @@ def data_proceso_compra_mc(numero):
                 }
             }
         }
-    return data
-def data_elab_lmulti(numero):
-    data={
-        "messaging_product": "whatsapp",
-        "recipient_type": "individual",
-        "to": numero,
-        "type": "video",
-        "video": {
-            "link": "https://bot-grupo-mascleaning.onrender.com/static/video_lmulti.mp4",
-            "caption": "Video elaboración Limpiador Multiusos."
-        }
-}
     return data
 if __name__=='__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
