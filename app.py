@@ -384,7 +384,7 @@ def data_elab_lavatrastes(numero):
             "recipient_type": "individual",
             "type": "video",
             "video": {
-                "link": "https://bot-grupo-mascleaning.onrender.com/static/video_init2.mp4",
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
                 "caption": "Video elaboración Lavatrastes."
             }
         }
