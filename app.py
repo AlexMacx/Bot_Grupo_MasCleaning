@@ -124,7 +124,7 @@ def recibir_mensajes(req):
 
         return jsonify({'message':'EVENT_RECEIVED'})
     except Exception as e:
-        return jsonify({'message':'EVENT_RECEIVED'})
+        return jsonify({'message':'EVENT_RECEIVED'+str(e)})
 
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
@@ -136,20 +136,31 @@ def enviar_mensajes_whatsapp(texto, numero):
         agregar_mensajes_log("Entra menu otro: "+texto)
         data = data_otro(numero)
     elif ("clkmc" in texto):
-        agregar_mensajes_log("Entra clkmc o 0: "+texto)
-        data = data_menu_principal(numero)
-    elif ("clk_suaviza" in texto):
-        agregar_mensajes_log("Entra clk_suaviza: "+texto)
+        agregar_mensajes_log("Entra clkmc (menu soy gmc): "+texto)
+        data = data_menu_soy_gmc(numero)
+    elif("clknewmc" in texto):
+        agregar_mensajes_log("Entra clkmc (menu quiero ser gmc): "+texto)
+        data = data_menu_quiero_ser_gmc(numero)
+    elif("clkdeliver" in texto):
+        agregar_mensajes_log("Entra clkmc (menu envios): "+texto)
+        data = data_envios(numero)
+    elif ("clksuaviza" in texto):
+        agregar_mensajes_log("Entra clksuaviza: "+texto)
         data=data_elab_suaviza(numero)
-        #data=data_busca_proveedor(numero)
+    elif("clksell" in texto):
+        agregar_mensajes_log("Entra clksell: "+texto)
+        data=data_punto_venta(numero)
+    elif("clk_infosell" in texto):
+        agregar_mensajes_log("Entra clk_infosell: "+texto)
+        data=data_info_pv(numero)
     elif ("clkdoubts" in texto):
         agregar_mensajes_log("Entra clkdoubts: "+texto)
         data=data_dudas_elabora_mc(numero)
     elif ("clklpricess" in texto):
         agregar_mensajes_log("Entra clklpricess: "+texto)
         data=data_lista_precios(numero)
-    elif ("4" in texto and len(texto) == 1):
-        agregar_mensajes_log("Entra ubicacion o 4: "+texto)
+    elif ("clklocation" in texto):
+        agregar_mensajes_log("Entra clklocation: "+texto)
         data=data_ubicacion_mc(numero)
     elif ("clkorder" in texto):
         agregar_mensajes_log("Entra clkorder: "+texto)
@@ -208,7 +219,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     finally:
         connection.close()
 
-def data_menu_principal(numero):
+def data_menu_soy_gmc(numero):
     data = {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
@@ -321,7 +332,7 @@ def data_menu_inicial(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clkshare"
+                                "payload": "clknewmc"
                             }
                         ]
                     },
@@ -333,6 +344,103 @@ def data_menu_inicial(numero):
                             {
                                 "type": "payload",
                                 "payload": "clkmc"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    return data
+def data_menu_quiero_ser_gmc(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "template",
+            "template": {
+                "name": "quiero_ser_gmc",
+                "language": {
+                    "code": "es_MX"
+                },
+                "components": [
+                    {
+                        "type": "header",
+                        "parameters": [
+                            {
+                                "type": "video",
+                                "video": {
+                                    "link": "https://bot-grupo-mascleaning.onrender.com/static/video-bienvenida.mp4"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "body",
+                        "parameters": []
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkorder"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clklocation"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkdeliver"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clklpricess"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clksell"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "1",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkmm"
                             }
                         ]
                     }
@@ -511,7 +619,7 @@ def data_dudas_elabora_mc(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clk_suaviza"
+                                "payload": "clksuaviza"
                             }
                         ]
                     },
@@ -686,7 +794,29 @@ def data_ubicacion_mc(numero):
                         "parameters": [
                             {
                                 "type": "payload",
-                                "payload": "clkmc"
+                                "payload": "clkorder"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clkdeliver"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "button",
+                        "sub_type": "quick_reply",
+                        "index": "0",
+                        "parameters": [
+                            {
+                                "type": "payload",
+                                "payload": "clknewmc"
                             }
                         ]
                     }
@@ -728,6 +858,126 @@ def data_proceso_compra_mc(numero):
                             "reply": {
                                 "id": "clkmc",
                                 "title": "Atras"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    return data
+def data_envios(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "header": {
+                    "type": "image",
+                    "image": {
+                        "link": "https://bot-grupo-mascleaning.onrender.com/static/img_envios.jpg"
+                    }
+                },
+                "body": {
+                    "text": "Da click en la imagen para ver costos de envío."
+                },
+                "footer": {
+                    "text": "Envíos nacionales o locales."
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clkorder",
+                                "title": "¿Cómo hacer pedido?"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clklpricess",
+                                "title": "Lista de precios"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clknewmc",
+                                "title": "Atras"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    return data
+def data_punto_venta(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "header": {
+                    "type": "video",
+                    "video": {
+                        "link": "https://bot-grupo-mascleaning.onrender.com/static/video-lmulti.mp4"
+                    }
+                },
+                "body": {
+                    "text": "Da click en el boton Punto de Venta para comaprtir información. Si tienes alguna duda o comentario, puedes llamarme en cualquier momento."
+                },
+                "footer": {
+                    "text": "Video de ejemplo, cambiarlo. Cambiar mensaje footer."
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clk_infosell",
+                                "title": "Punto de Venta"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clknewmc",
+                                "title": "Atras"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    return data
+def data_info_pv(numero):
+    data=data={
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "header": {
+                    "type": "document",
+                    "document": {
+                        "link": "https://bot-grupo-mascleaning.onrender.com/static/punto-venta.pdf"
+                    }
+                },
+                "footer": {
+                    "text": "Información de apertura punto de venta."
+                },
+                "action": {
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clkorder",
+                                "title": "¿Cómo hacer un pedido?"
                             }
                         }
                     ]
