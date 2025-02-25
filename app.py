@@ -801,7 +801,7 @@ def data_ubicacion_mc(numero):
                     {
                         "type": "button",
                         "sub_type": "quick_reply",
-                        "index": "0",
+                        "index": "1",
                         "parameters": [
                             {
                                 "type": "payload",
@@ -812,7 +812,7 @@ def data_ubicacion_mc(numero):
                     {
                         "type": "button",
                         "sub_type": "quick_reply",
-                        "index": "0",
+                        "index": "2",
                         "parameters": [
                             {
                                 "type": "payload",
