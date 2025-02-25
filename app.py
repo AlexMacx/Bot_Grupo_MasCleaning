@@ -403,7 +403,7 @@ def data_menu_quiero_ser_gmc(numero):
                     {
                         "type": "button",
                         "sub_type": "quick_reply",
-                        "index": "1",
+                        "index": "2",
                         "parameters": [
                             {
                                 "type": "payload",
@@ -414,7 +414,7 @@ def data_menu_quiero_ser_gmc(numero):
                     {
                         "type": "button",
                         "sub_type": "quick_reply",
-                        "index": "1",
+                        "index": "3",
                         "parameters": [
                             {
                                 "type": "payload",
@@ -425,7 +425,7 @@ def data_menu_quiero_ser_gmc(numero):
                     {
                         "type": "button",
                         "sub_type": "quick_reply",
-                        "index": "1",
+                        "index": "4",
                         "parameters": [
                             {
                                 "type": "payload",
@@ -436,7 +436,7 @@ def data_menu_quiero_ser_gmc(numero):
                     {
                         "type": "button",
                         "sub_type": "quick_reply",
-                        "index": "1",
+                        "index": "5",
                         "parameters": [
                             {
                                 "type": "payload",
