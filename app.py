@@ -980,7 +980,7 @@ def data_info_pv(numero):
                             "type": "reply",
                             "reply": {
                                 "id": "clkorder",
-                                "title": "¿Cómo hacer un pedido?"
+                                "title": "¿Cómo hacer pedido?"
                             }
                         },
                         {
