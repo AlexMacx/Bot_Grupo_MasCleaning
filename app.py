@@ -968,8 +968,11 @@ def data_info_pv(numero):
                         "link": "https://bot-grupo-mascleaning.onrender.com/static/punto-venta.pdf"
                     }
                 },
+                "body": {
+                    "text": "Documentación básica y pasos a seguir para apertura de Punto de Venta"
+                },
                 "footer": {
-                    "text": "Información de apertura punto de venta."
+                    "text": "Información punto de venta."
                 },
                 "action": {
                     "buttons": [
@@ -978,6 +981,13 @@ def data_info_pv(numero):
                             "reply": {
                                 "id": "clkorder",
                                 "title": "¿Cómo hacer un pedido?"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "clknewmc",
+                                "title": "Atras"
                             }
                         }
                     ]
