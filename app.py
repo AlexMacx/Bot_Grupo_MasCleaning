@@ -506,7 +506,7 @@ def data_elab_detergente(numero):
             "type": "image",
             "image": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/elabora_detergente.jpg",
-                "caption": "Video elaboración Lavatrastes."
+                "caption": "Información para elaboración detergente."
             }
         }
     return data
