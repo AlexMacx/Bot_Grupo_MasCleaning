@@ -129,7 +129,7 @@ def recibir_mensajes(req):
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
 
-    if ("hola" in texto or "tardes" in texto or "disponible" in texto or "clkmm" in texto):
+    if ("informacion" in texto or "clkmm" in texto):
         agregar_mensajes_log("Entra menu inicial: "+texto)
         data=data_menu_inicial(numero)
     elif "clkother" in texto:
