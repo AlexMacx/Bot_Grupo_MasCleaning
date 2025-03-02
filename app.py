@@ -171,6 +171,9 @@ def enviar_mensajes_whatsapp(texto, numero):
     elif ("clk_ltrastes" in texto):
         agregar_mensajes_log("Entra clk_ltrastes: "+texto)
         data = data_elab_lavatrastes(numero)
+    elif ("clk_deter" in texto):
+        agregar_mensajes_log("Entra clk_deter: "+texto)
+        data = data_elab_detergente(numero)
     elif "chkentrega" in texto: #Posiblemente se quite
         data = {
             "messaging_product": "whatsapp",
@@ -179,12 +182,9 @@ def enviar_mensajes_whatsapp(texto, numero):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "Compartenos tu dirreción para agendar entrega"
+                "body": "Compartenos tu direción para agendar entrega"
             }
         }
-    else:
-        agregar_mensajes_log("Entra else menu inical: "+texto)
-        data=data_menu_inicial(numero)
     #Convertir el diccionario a formato JSON
     if type(data) is not list:
         data = json.dumps(data)
@@ -493,6 +493,19 @@ def data_elab_lavatrastes(numero):
             "type": "video",
             "video": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/video-init2.mp4",
+                "caption": "Video elaboración Lavatrastes."
+            }
+        }
+    return data
+#Elabora detergente
+def data_elab_detergente(numero):
+    data={
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "recipient_type": "individual",
+            "type": "image",
+            "image": {
+                "link": "https://bot-grupo-mascleaning.onrender.com/static/elabora_detergente.jpg",
                 "caption": "Video elaboración Lavatrastes."
             }
         }
