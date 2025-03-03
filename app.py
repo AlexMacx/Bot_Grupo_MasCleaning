@@ -473,15 +473,16 @@ def data_elab_lmulti(numero):
         }
     }
     return data
+#Elabora suavizante
 def data_elab_suaviza(numero):
     data={
         "messaging_product": "whatsapp",
         "recipient_type": "individual",
         "to": numero,
-        "type": "video",
-        "video": {
-            "link": "https://bot-grupo-mascleaning.onrender.com/static/video-jabon-liquido-rosa.mp4",
-            "caption": "Video elaboración Suavizante."
+        "type": "image",
+        "image": {
+            "link": "https://bot-grupo-mascleaning.onrender.com/static/elabora_suavizante.jpg",
+            "caption": "Información para elaborar suavizante."
         }
     }
     return data
@@ -501,8 +502,8 @@ def data_elab_lavatrastes(numero):
 def data_elab_detergente(numero):
     data={
             "messaging_product": "whatsapp",
-            "to": numero,
             "recipient_type": "individual",
+            "to": numero,
             "type": "image",
             "image": {
                 "link": "https://bot-grupo-mascleaning.onrender.com/static/elabora_detergente.jpg",
