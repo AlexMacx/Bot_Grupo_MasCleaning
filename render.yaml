@@ -1,0 +1,12 @@
+# Exported from Render on 2025-06-21T22:59:36Z
+services:
+- type: web
+  name: Bot_Grupo_MasCleaning
+  runtime: python
+  repo: https://github.com/AlexMacx/Bot_Grupo_MasCleaning
+  plan: free
+  region: oregon
+  buildCommand: pip install -r requirements.txt
+  startCommand: python app.py
+  autoDeployTrigger: commit
+version: "1"
