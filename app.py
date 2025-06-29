@@ -979,7 +979,7 @@ def data_info_pv(numero):
                 "header": {
                     "type": "document",
                     "document": {
-                        "link": "https://bot-grupo-mascleaning.onrender.com/static/punto-venta.pdf"
+                        "link": "https://bot-grupo-mascleaning.onrender.com/static/punto-venta-2.pdf"
                     }
                 },
                 "body": {
